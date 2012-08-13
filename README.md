@@ -1,0 +1,4 @@
+wallet
+======
+
+Spring + GWT project
