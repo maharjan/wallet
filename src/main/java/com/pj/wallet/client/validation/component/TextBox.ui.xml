@@ -1,0 +1,19 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:v="urn:import:com.pj.wallet.client.validation">
+	<ui:style>
+		.html {
+			width: 100%;
+			float: left;
+			color: #ff0000;
+			font-size:12px;
+		}
+	</ui:style>
+	<ui:with field="res" type="com.pj.wallet.client.resources.WalletResources" />
+
+	<g:FlowPanel styleName="{res.walletCss.inputLong}" ui:field="panel">
+		<g:Label ui:field="label"></g:Label>
+		<v:ValidatingTextBox ui:field="input"/>
+		<g:HTML ui:field="error" styleName="{style.html}"></g:HTML>
+	</g:FlowPanel>
+</ui:UiBinder> 

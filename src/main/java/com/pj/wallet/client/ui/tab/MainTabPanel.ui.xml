@@ -1,0 +1,40 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with type="com.pj.wallet.client.resources.WalletResources"
+		field="res"></ui:with>
+		
+	<ui:style>
+		.gap {
+			padding-top: 5px;
+		}
+		
+		.imgText {
+			color: white;
+			font-weight: bold;
+			text-decoration: none;
+			margin-right: 1px;
+		}
+		
+		.image {
+			margin-top: 0px;
+			margin-left: 1px;
+			float: left;
+		}
+	</ui:style>
+
+	<g:HTMLPanel>
+		<g:HTMLPanel styleName="{style.gap}">
+			<g:HTMLPanel styleName="{res.walletCss.headerMain}">
+				<g:HTMLPanel styleName="{res.walletCss.menuMain}">
+					<g:FlowPanel ui:field="tabPanel" />
+					<div style="clear: both;" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+
+		<g:HTMLPanel styleName="{res.walletCss.mainBody}" ui:field="mainContainer">
+			<g:FlowPanel ui:field="tabContentContainer" />
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

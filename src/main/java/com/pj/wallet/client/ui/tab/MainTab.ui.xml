@@ -1,0 +1,50 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style type='com.pj.wallet.client.ui.tab.BaseTab.Style'>
+		.tab {
+			float: left;
+			padding: 17px 0px;
+			font-weight: 11px;
+		}
+		
+		.active {
+			font-weight: normal;
+		}
+		
+		.inactive {
+			
+		}
+		
+		.tab a,.tab a:visited,.tab a:hover {
+			text-decoration: none;
+		}
+		
+		.active a {
+			margin: 10px;
+			padding: 10px;
+			color: #000;
+			text-shadow: 1px 3px 1px #6b82a3;
+			filter: dropshadow(color = #6b82a3, offx = 1, offy = 3);
+		}
+		
+		.inactive a {
+			margin: 10px;
+			padding: 10px;
+			font-weight: normal;
+			color: #000;
+		}
+		
+		.inactive a:hover {
+			margin: 10px;
+			padding: 10px;
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+			-webkit-box-shadow: 1px 1px 2px 1px #333;
+			box-shadow: 0px 0px 2px 0px #333;
+		}
+	</ui:style>
+
+	<g:Hyperlink addStyleNames="{style.tab} {style.inactive}"
+		ui:field="hyperlink" />
+</ui:UiBinder> 

@@ -1,0 +1,75 @@
+.clear {
+	clear: both;
+}
+
+.headerMain {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+@sprite .menuMain { /* 	width: 100%; */
+	margin: 0px 100px;
+	position: relative;
+	font-family: 'proximaNova', Arial, Helvetica, Lucida Grande;
+	text-shadow: 0px 1px 0px #aaa;
+	padding: 0px;
+	list-style: none;
+	gwt-image: "menuGrad";
+	-webkit-border-radius: 5px;
+	border-radius: 5px 5px 0px 0px;
+	-webkit-box-shadow: 0px 0px 1px 0px #555;
+	box-shadow: 0px 0px 1px 0px #555;
+}
+
+@sprite .submenuMain {
+	position: relative;
+	/* 	width: 100%; */
+	margin: -3px 100px 0px;
+	padding: 0px 0px 0px 0px;
+	font-family: 'proximaNova', Arial, Helvetica, Lucida Grande;
+	text-shadow: 0px 1px 0px #aaa;
+	list-style: none;
+	gwt-image: "menuGrad";
+	-webkit-border-radius: 5px;
+	border-radius: 0px 0px 5px 5px;
+	-webkit-box-shadow: 0px 0px 1px 0px #555;
+	box-shadow: 0px 0px 1px 0px #555;
+}
+
+.mainBody {
+	margin: 2px 0px 0px 0px;
+	padding: 0px;
+}
+
+.subTabContainer {
+	width: 950px;
+	margin: 10px 100px 10px 120px;
+	float: left;
+}
+
+.error {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	padding: 1px 2px;
+	height: 20px;
+	border: 1px solid #f00 !important;
+}
+
+.errorMessage{
+	font-family: Arial, Helvetica, sans-serif;
+	height: auto;
+	font-size: 14px;
+	color: #FF0000;
+	padding: 15px 0px 10px 0px;
+	text-align: center;
+}
+
+/* form & input css */
+.inputLong {
+	width: 250px;
+	margin: 0px 0px 0px 0px;
+	padding: 0px;
+	float: left;
+	padding-bottom: 7px;
+}
