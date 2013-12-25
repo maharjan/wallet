@@ -11,7 +11,7 @@ public class AccountBaseView extends SubTabContainer implements AccountBase {
 	public void setUiHandlers(AccountBaseViewUiHandlers uiHandlers) {
 	}
 
-	@Override
+//	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (slot == MyAccountPresenter.TYPE_SetTabContent) {
 			tabPanel.setPanelContent(content);

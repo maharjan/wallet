@@ -8,6 +8,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.Tab;
 import com.gwtplatform.mvp.client.TabData;
 
 public class SimpleTabPanel extends BaseTabPanel implements HasWidgets {
@@ -49,6 +50,12 @@ public class SimpleTabPanel extends BaseTabPanel implements HasWidgets {
 	@Override
 	public boolean remove(Widget w) {
 		return childContainer.remove(w);
+	}
+
+	@Override
+	public void changeTab(Tab tab, TabData tabData, String historyToken) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -53,4 +53,10 @@ public class SubTabContainer extends ViewImpl implements TabView {
 		tabPanel.setActiveTab(tab);
 	}
 
+	@Override
+	public void changeTab(Tab tab, TabData tabData, String historyToken) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -14,7 +14,7 @@ public class MyRootpresenter extends RootPresenter {
 	}
 
 	public static final class MyRootView extends RootView {
-		@Override
+//		@Override
 		public void setInSlot(Object slot, Widget content) {
 			RootPanel.get("gwt").add(content);
 		}
