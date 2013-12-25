@@ -1,0 +1,155 @@
+apply plugin : 'java'
+apply plugin : 'eclipse'
+apply plugin : 'maven'
+apply plugin : 'war'
+
+ext{
+	springVersion = "3.2.4.RELEASE"
+	springSecurityVersion ="3.1.4.RELEASE"
+	gwtVersion = "2.5.0"
+}
+
+task wrapper(task: Wrapper){
+	gradleVersion = '1.7'
+}
+
+repositories { 
+	mavenCentral()
+//	maven { url "http://repo.springsource.org/libs-snapshot" }
+}
+
+dependencies{
+	providedCompile("com.google.gwt:gwt-user:${gwtVersion}")
+	providedCompile("com.google.gwt:gwt-dev:${gwtVersion}")
+	
+	// Runtime GWT libraries, should be included in WAR
+	runtime 'com.google.gwt:gwt-servlet:${gwtVersion}'
+	
+	compile ("javax.validation:validation-api:1.1.0.Final")
+	
+	// Spring
+	compile ("org.springframework:spring-webmvc:${springVersion}")
+	compile ("org.springframework:spring-context:${springVersion}")
+	compile ("org.springframework:spring-orm:${springVersion}")
+	compile ("org.springframework.data:spring-data-jpa:1.4.2.RELEASE")
+	
+	compile ("org.springframework.security:spring-security-config:${springSecurityVersion}")
+	compile ("org.springframework.security:spring-security-web:${springSecurityVersion}")
+	
+	// logging
+	compile ("org.slf4j:slf4j-api:1.6.2")
+	compile ("org.slf4j:jcl-over-slf4j:1.6.2")
+	compile ("org.slf4j:jul-to-slf4j:1.6.2")
+	compile ("ch.qos.logback:logback-classic:1.0.3")
+	compile ("ch.qos.logback:logback-core:1.0.3")
+	compile ("log4j:log4j:1.2.16")
+	
+	// GWT
+	compile ("com.google.gwt:gwt-user:${gwtVersion}")
+	compile ("com.google.gwt:gwt-servlet:${gwtVersion}")
+	compile ("com.google.gwt:gwt-dev:${gwtVersion}")
+	compile ("com.gwtplatform:gwtp-mvp-client:1.0.2")
+	
+	compile ("com.google.gwt.inject:gin:1.5.0")
+	compile ("com.google.inject:guice:3.0-rc2")
+	compile ("com.google.inject.extensions:guice-assistedinject:3.0-rc2")
+	
+	compile ("commons-fileupload:commons-fileupload:1.2.2")
+	compile ("commons-io:commons-io:1.4")
+	
+	compile ("javax.servlet:jstl:1.2")
+	compile ("taglibs:standard:1.1.2")
+	
+	compile ("org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final")
+	compile ("org.hibernate:hibernate-validator:5.0.1.Final")
+
+	testCompile group: 'junit', name: 'junit', version: '4.+'
+	testCompile "org.springframework:spring-test:${springVersion}"
+	testCompile 'org.mockito:mockito-all:1.9.5-rc1+'
+
+	testCompile ("junit:junit:4.11")
+}
+
+task createDirs << {
+   sourceSets*.java.srcDirs*.each { it.mkdirs() }
+   sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+   webAppDir.mkdirs()
+}
+
+task initProject << {
+	File oldSource = file("./src")
+	File tmpSource = file("./tmp")
+	tmpSource.mkdirs()
+	
+	oldSource.listFiles().each {File f -> f.renameTo new File(tmpSource, f.name)}
+
+	sourceSets*.java.srcDirs*.each { it.mkdirs() }
+	sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+	webAppDir.mkdirs()
+	
+	File newSource = file(sourceSets.main.java.srcDirs.iterator().next())
+	
+	tmpSource.listFiles().each {File f -> f.renameTo new File(newSource, f.name)}
+	
+	tmpSource.delete()
+ }
+
+task compileGwt (dependsOn: classes, type: JavaExec) {
+	ext.buildDir = "${project.buildDir}/gwt"
+	ext.extraDir = "${project.buildDir}/extra"
+
+	inputs.source sourceSets.main.java.srcDirs
+	inputs.dir sourceSets.main.output.resourcesDir
+	outputs.dir buildDir
+
+	// Workaround for incremental build (GRADLE-1483)
+	outputs.upToDateSpec = new org.gradle.api.specs.AndSpec()
+
+	doFirst {
+		file(buildDir).mkdirs()
+		//classpath.each { println it.name}
+	}
+
+	main = 'com.google.gwt.dev.Compiler'
+
+	classpath {
+		[
+			sourceSets.main.java.srcDirs,           // Java source
+			sourceSets.main.output.resourcesDir,    // Generated resources
+			sourceSets.main.output.classesDir,      // Generated classes
+			sourceSets.main.compileClasspath,       // Deps
+		]
+	}
+
+	args =
+	[
+		'com.pj.wallet.Main', // Your GWT module
+		'-war', buildDir,
+		'-logLevel', 'INFO',
+		'-localWorkers', '2',
+		'-compileReport',
+		'-extra', extraDir,
+		// '-draftCompile' // Speeds up compile with 25%
+	]
+
+	maxHeapSize = '256M'
+}
+
+war.dependsOn compileGwt
+war {
+	from compileGwt.buildDir
+}
+war.doLast {
+	ant.unzip(src: war.archivePath, dest: "./war")
+}
+
+eclipse {
+	project {
+		natures 'com.google.gwt.eclipse.core.gwtNature'
+		buildCommand 'com.google.gdt.eclipse.core.webAppProjectValidator'
+		buildCommand 'com.google.gwt.eclipse.core.gwtProjectValidator'
+	}
+	classpath {
+		containers 'com.google.gwt.eclipse.core.GWT_CONTAINER'
+	}
+}
